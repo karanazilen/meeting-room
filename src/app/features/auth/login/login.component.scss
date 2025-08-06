@@ -1,0 +1,94 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 64px); // Subtract nav height
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+}
+
+.login-card mat-card-header {
+  text-align: center;
+  margin-bottom: 24px;
+
+  mat-card-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+  }
+
+  mat-card-subtitle {
+    font-size: 14px;
+    color: #666;
+    margin-top: 8px;
+  }
+}
+
+.login-card mat-card-content {
+  padding: 0;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.login-actions {
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
+
+.login-actions button {
+  height: 48px;
+  font-size: 16px;
+  font-weight: 500;
+  
+  mat-progress-spinner {
+    margin-right: 8px;
+  }
+}
+
+.login-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  margin-top: 16px;
+
+  mat-icon {
+    margin-top: 2px;
+    font-size: 20px;
+  }
+
+  p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+    line-height: 1.4;
+  }
+}
+
+// Mobile responsiveness
+@media (max-width: 480px) {
+  .login-container {
+    padding: 16px;
+    min-height: calc(100vh - 56px); // Smaller nav on mobile
+  }
+
+  .login-card {
+    padding: 16px;
+  }
+
+  .login-card mat-card-header mat-card-title {
+    font-size: 20px;
+  }
+}

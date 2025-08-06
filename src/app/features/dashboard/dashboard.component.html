@@ -1,0 +1,126 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>Welcome, {{ getUserDisplayName() }}!</h1>
+    <p class="user-role">{{ getUserRole() }}</p>
+  </div>
+
+  <div class="loading-container" *ngIf="isLoading">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    <p>Loading dashboard...</p>
+  </div>
+
+  <div class="dashboard-content" *ngIf="!isLoading && currentUser">
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+      <h2>Quick Actions</h2>
+      <div class="action-cards">
+        <mat-card class="action-card" routerLink="/bookings/new">
+          <mat-card-content>
+            <mat-icon color="primary">add_circle</mat-icon>
+            <h3>Book a Room</h3>
+            <p>Schedule a new meeting</p>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="action-card" routerLink="/bookings">
+          <mat-card-content>
+            <mat-icon color="primary">event</mat-icon>
+            <h3>My Bookings</h3>
+            <p>View your reservations</p>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="action-card" routerLink="/rooms">
+          <mat-card-content>
+            <mat-icon color="primary">meeting_room</mat-icon>
+            <h3>Browse Rooms</h3>
+            <p>Find available spaces</p>
+          </mat-card-content>
+        </mat-card>
+
+        <!-- Admin-only quick actions -->
+        <mat-card class="action-card" routerLink="/users" *ngIf="canManageUsers()">
+          <mat-card-content>
+            <mat-icon color="primary">people</mat-icon>
+            <h3>Manage Users</h3>
+            <p>User administration</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+
+    <!-- Dashboard Stats -->
+    <div class="dashboard-stats">
+      <h2>Overview</h2>
+      <div class="stats-grid">
+        <mat-card class="stat-card">
+          <mat-card-content>
+            <div class="stat-number">{{ stats.upcomingBookings }}</div>
+            <div class="stat-label">Upcoming Bookings</div>
+            <mat-icon>event_available</mat-icon>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="stat-card">
+          <mat-card-content>
+            <div class="stat-number">{{ stats.activeBookings }}</div>
+            <div class="stat-label">Active Today</div>
+            <mat-icon>today</mat-icon>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="stat-card" *ngIf="isFacilityAdmin()">
+          <mat-card-content>
+            <div class="stat-number">{{ stats.totalRooms }}</div>
+            <div class="stat-label">Total Rooms</div>
+            <mat-icon>meeting_room</mat-icon>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="stat-card" *ngIf="isFacilityAdmin()">
+          <mat-card-content>
+            <div class="stat-number">{{ stats.totalUsers }}</div>
+            <div class="stat-label">Total Users</div>
+            <mat-icon>people</mat-icon>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div class="admin-section" *ngIf="isFacilityAdmin()">
+      <h2>Administration</h2>
+      <div class="admin-cards">
+        <mat-card class="admin-card" routerLink="/reports" *ngIf="canViewReports()">
+          <mat-card-content>
+            <mat-icon color="primary">analytics</mat-icon>
+            <h3>Reports & Analytics</h3>
+            <p>View system reports and usage statistics</p>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="admin-card" routerLink="/rooms/manage" *ngIf="canManageRooms()">
+          <mat-card-content>
+            <mat-icon color="primary">settings</mat-icon>
+            <h3>Room Management</h3>
+            <p>Configure rooms and locations</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+
+  <!-- Not authenticated state -->
+  <div class="not-authenticated" *ngIf="!isLoading && !currentUser">
+    <mat-card>
+      <mat-card-content>
+        <mat-icon color="warn" style="font-size: 48px;">warning</mat-icon>
+        <h2>Authentication Required</h2>
+        <p>Please log in to access the dashboard.</p>
+        <button mat-raised-button color="primary" routerLink="/auth/login">
+          Sign In
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

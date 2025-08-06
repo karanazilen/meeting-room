@@ -1,0 +1,44 @@
+.main-nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-spacer {
+  flex: 1 1 auto;
+}
+
+.flex-spacer {
+  flex: 1 1 auto;
+}
+
+// Responsive design for mobile
+@media (max-width: 768px) {
+  .nav-menu {
+    gap: 4px;
+    
+    button {
+      font-size: 12px;
+      padding: 0 8px;
+      
+      mat-icon {
+        margin-right: 4px;
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .nav-menu {
+    // Hide text on mobile, show only icons
+    button span:not(.mat-icon) {
+      display: none;
+    }
+  }
+}

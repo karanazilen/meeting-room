@@ -1,0 +1,98 @@
+<mat-toolbar color="primary" class="main-nav">
+  <button mat-icon-button [routerLink]="['/dashboard']" *ngIf="isAuthenticated()">
+    <mat-icon>home</mat-icon>
+  </button>
+  
+  <span class="nav-spacer"></span>
+  
+  <!-- Main Navigation Menu for Authenticated Users -->
+  <div *ngIf="isAuthenticated()" class="nav-menu">
+    
+    <!-- Dashboard -->
+    <button mat-button [routerLink]="['/dashboard']" *ngIf="navigationPermissions.showDashboard">
+      <mat-icon>dashboard</mat-icon>
+      Dashboard
+    </button>
+    
+    <!-- Bookings -->
+    <button mat-button [routerLink]="['/bookings']" *ngIf="navigationPermissions.showBookings">
+      <mat-icon>event</mat-icon>
+      Bookings
+    </button>
+    
+    <!-- Rooms -->
+    <button mat-button [routerLink]="['/rooms']" *ngIf="navigationPermissions.showRooms">
+      <mat-icon>meeting_room</mat-icon>
+      Rooms
+    </button>
+    
+    <!-- Management Menu for Facility Admins -->
+    <button mat-button [matMenuTriggerFor]="managementMenu" 
+            *ngIf="navigationPermissions.showUserManagement || navigationPermissions.showRoomManagement">
+      <mat-icon>admin_panel_settings</mat-icon>
+      Management
+      <mat-icon>keyboard_arrow_down</mat-icon>
+    </button>
+    <mat-menu #managementMenu="matMenu">
+      <button mat-menu-item [routerLink]="['/management/users']" 
+              *ngIf="navigationPermissions.showUserManagement">
+        <mat-icon>people</mat-icon>
+        <span>User Management</span>
+      </button>
+      <button mat-menu-item [routerLink]="['/management/rooms']" 
+              *ngIf="navigationPermissions.showRoomManagement">
+        <mat-icon>meeting_room</mat-icon>
+        <span>Room Management</span>
+      </button>
+      <button mat-menu-item [routerLink]="['/management/groups']" 
+              *ngIf="navigationPermissions.showUserManagement">
+        <mat-icon>group</mat-icon>
+        <span>Group Management</span>
+      </button>
+      <button mat-menu-item [routerLink]="['/management/locations']" 
+              *ngIf="navigationPermissions.showRoomManagement">
+        <mat-icon>location_on</mat-icon>
+        <span>Location Management</span>
+      </button>
+    </mat-menu>
+    
+    <!-- Reports for Facility Admins -->
+    <button mat-button [routerLink]="['/reports']" *ngIf="navigationPermissions.showReports">
+      <mat-icon>analytics</mat-icon>
+      Reports
+    </button>
+  </div>
+  
+  <span class="flex-spacer"></span>
+  
+  <!-- User Menu for Authenticated Users -->
+  <div *ngIf="isAuthenticated()">
+    <button mat-button [matMenuTriggerFor]="userMenu">
+      <mat-icon>account_circle</mat-icon>
+      {{getUserDisplayName()}}
+      <mat-icon>keyboard_arrow_down</mat-icon>
+    </button>
+    <mat-menu #userMenu="matMenu">
+      <div mat-menu-item disabled>
+        <span>{{getUserRole()}}</span>
+      </div>
+      <mat-divider></mat-divider>
+      <button mat-menu-item [routerLink]="['/profile']">
+        <mat-icon>person</mat-icon>
+        <span>Profile</span>
+      </button>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
+  </div>
+  
+  <!-- Login Link for Unauthenticated Users -->
+  <div *ngIf="!isAuthenticated()">
+    <button mat-button [routerLink]="['/auth/login']">
+      <mat-icon>login</mat-icon>
+      Login
+    </button>
+  </div>
+</mat-toolbar>
